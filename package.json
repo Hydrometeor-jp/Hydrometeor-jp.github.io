@@ -17,9 +17,12 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
+    "@astrojs/preact": "^5.0.2",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.0.8",
     "microcms-js-sdk": "^3.3.0",
+    "preact": "^10.29.0",
+    "swr": "^2.4.1",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
@@ -39,5 +42,9 @@
       "eslint --fix",
       "prettier --write"
     ]
+  },
+  "overrides": {
+    "react": "npm:@preact/compat@latest",
+    "react-dom": "npm:@preact/compat@latest"
   }
 }

@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config"
+import preact from "@astrojs/preact"
 
 import tailwindcss from "@tailwindcss/vite"
 
@@ -12,4 +13,5 @@ export default defineConfig({
     domains: ["images.microcms-assets.io"],
   },
   trailingSlash: "never",
+  integrations: [preact({ compat: true })],
 })

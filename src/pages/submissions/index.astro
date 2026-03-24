@@ -1,0 +1,8 @@
+---
+import { getSubmissionsList } from "@/libs/microcms"
+import Submissions from "./_component.astro"
+
+const submissions = await getSubmissionsList()
+---
+
+<Submissions submissions={submissions} />

@@ -7,8 +7,8 @@ import type {
 import { createClient } from "microcms-js-sdk"
 
 const client = createClient({
-  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
-  apiKey: import.meta.env.MICROCMS_API_KEY,
+  serviceDomain: import.meta.env.PUBLIC_MICROCMS_SERVICE_DOMAIN,
+  apiKey: import.meta.env.PUBLIC_MICROCMS_API_KEY,
 })
 
 // カスタムフィールド: アーティストリンク
@@ -77,3 +77,17 @@ export const getSubmissionsList = async (): Promise<Submission[]> => {
   })
   return result.contents
 }
+
+export const getAlbumPreview = (contentId: string, draftKey: string) =>
+  client.getListDetail<Album>({
+    endpoint: "albums",
+    contentId,
+    queries: { draftKey },
+  })
+
+export const getSubmissionPreview = (contentId: string, draftKey: string) =>
+  client.getListDetail<Submission>({
+    endpoint: "submissions",
+    contentId,
+    queries: { draftKey },
+  })

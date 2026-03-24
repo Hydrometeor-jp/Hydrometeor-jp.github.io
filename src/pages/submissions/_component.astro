@@ -1,8 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro"
-import { getSubmissionsList } from "@/libs/microcms"
+import { type Submission } from "@/libs/microcms"
 
-const submissions = await getSubmissionsList()
+// const submissions = await getSubmissionsList()
+const { submissions = [] } = Astro.props as { submissions: Submission[] }
 ---
 
 <Layout title="Submissions">
