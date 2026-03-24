@@ -27,13 +27,53 @@ export type Track = {
 
 // API: アルバム情報
 // https://hydrometeor.microcms.io/apis/albums
-export type Albums = {
+export type Album = {
   title: string
   releaseDate: MicroCMSDate
   thumbnail: MicroCMSImage
+  iconLinks?: string
+  spotifyAlbumID?: string
+  youtubeMovieID?: string
   trackList?: Track[]
 } & MicroCMSListContent
 
-export const getAlbums = async (queries?: MicroCMSQueries) => {
-  return await client.getList<Albums>({ endpoint: "albums", queries })
+// API: ニュース
+// https://hydrometeor.microcms.io/apis/news
+export type News = {
+  title: string
+  date: MicroCMSDate
+} & MicroCMSListContent
+
+// API: Submissions
+// https://hydrometeor.microcms.io/apis/submissions
+export type Submission = {
+  title: string
+  body: string
+} & MicroCMSListContent
+
+export const getMusicList = async (queries?: MicroCMSQueries) => {
+  return await client.getList<Album>({ endpoint: "albums", queries })
+}
+
+export const getMusicByTitle = async (title: string): Promise<Album | null> => {
+  const result = await client.getList<Album>({
+    endpoint: "albums",
+    queries: { filters: `title[equals]${title}`, limit: 1 },
+  })
+  return result.contents[0] ?? null
+}
+
+export const getNewsList = async (): Promise<News[]> => {
+  const result = await client.getList<News>({
+    endpoint: "news",
+    queries: { orders: "-date" },
+  })
+  return result.contents
+}
+
+export const getSubmissionsList = async (): Promise<Submission[]> => {
+  const result = await client.getList<Submission>({
+    endpoint: "submissions",
+  })
+  return result.contents
 }

@@ -1,0 +1,120 @@
+---
+import IconLink from "../../components/IconLink.astro"
+import Layout from "../../layouts/Layout.astro"
+import { getMusicList } from "../../libs/microcms"
+import { paddingZero, toAlbumSlug } from "../../libs/util"
+
+export async function getStaticPaths() {
+  const { contents: albums } = await getMusicList()
+  console.log("albums")
+  console.log(albums)
+  return albums.map((album) => ({
+    params: { title: toAlbumSlug(album.title) },
+    props: { album },
+  }))
+}
+
+const { album } = Astro.props
+---
+
+<Layout title={album.title}>
+  <section class="max-w-4xl mx-auto px-8 py-16">
+    <div class="flex flex-col md:flex-row gap-16">
+      <!-- サムネイル -->
+      <div class="shrink-0">
+        <img
+          src={`${album.thumbnail.url}?w=600&fm=webp`}
+          alt={album.thumbnail.alt ?? album.title}
+          width={300}
+          height={300}
+          class="w-full md:w-72 object-cover"
+        />
+
+        <div class="mt-8">
+          {
+            album.iconLinks && (
+              <div class="flex gap-2 justify-center">
+                {album.iconLinks
+                  .split("\n")
+                  .map((url) => url.trim())
+                  .filter((url) => url.length > 0)
+                  .map((url) => (
+                    <IconLink url={url} />
+                  ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- タイトル + トラックリスト -->
+      <div class="flex flex-col gap-8">
+        <h1 class="text-2xl">{album.title}</h1>
+
+        {
+          album.trackList && album.trackList.length > 0 && (
+            <ol class="flex flex-col gap-2">
+              {album.trackList.map((track, i) => (
+                <li class="grid grid-cols-[2rem_1fr] gap-x-4 text-sm">
+                  <span class="text-neutral-400">{paddingZero(i + 1, 2)}</span>
+                  <span class="flex flex-wrap gap-x-1">
+                    {track.artistLinks.map((artist, j) => (
+                      <>
+                        {artist.url ? (
+                          <a
+                            href={artist.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-neutral-500 transition-colors"
+                          >
+                            {artist.name}
+                          </a>
+                        ) : (
+                          <span>{artist.name}</span>
+                        )}
+                        {j < track.artistLinks.length - 1 && (
+                          <span class="text-neutral-400">,</span>
+                        )}
+                      </>
+                    ))}
+                    <span class="text-neutral-400">—</span>
+                    <span>{track.title}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          )
+        }
+      </div>
+    </div>
+    {
+      (album.spotifyAlbumID || album.youtubeMovieID) && (
+        <div class="flex flex-col gap-8 mt-16">
+          {album.spotifyAlbumID && (
+            <iframe
+              src={`https://open.spotify.com/embed/album/${album.spotifyAlbumID}`}
+              title={`${album.title} - Spotify`}
+              width="100%"
+              height="352"
+              class="max-w-120 mx-auto"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            />
+          )}
+          {album.youtubeMovieID && (
+            <div class="relative w-full aspect-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${album.youtubeMovieID}`}
+                title={`${album.title} - YouTube`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                class="absolute inset-0 w-full h-full"
+              />
+            </div>
+          )}
+        </div>
+      )
+    }
+  </section>
+</Layout>

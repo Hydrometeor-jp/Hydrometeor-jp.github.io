@@ -11,5 +11,5 @@ export default defineConfig({
   image: {
     domains: ["images.microcms-assets.io"],
   },
-  trailingSlash: "never"
+  trailingSlash: "never",
 })

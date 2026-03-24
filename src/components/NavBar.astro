@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets"
+import kumo from "../assets/kumo.png"
+
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Music", href: "/music" },
+  { label: "Submissions", href: "/submissions" },
+  { label: "Contact", href: "/contact" },
+]
+---
+
+<header class="border-b border-neutral-200">
+  <div class="grid grid-cols-[1fr_auto_1fr] items-center px-8 h-16">
+    <!-- デスクトップ: ナビリンク（左） -->
+    <nav class="hidden md:flex gap-8">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm tracking-widest uppercase hover:text-neutral-500 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- モバイル: ハンバーガーボタン（左） -->
+    <button
+      id="menu-toggle"
+      class="md:hidden flex flex-col gap-1 w-6"
+      aria-label="メニューを開く"
+      aria-expanded="false"
+    >
+      <span class="block w-full h-px bg-neutral-900"></span>
+      <span class="block w-full h-px bg-neutral-900"></span>
+      <span class="block w-full h-px bg-neutral-900"></span>
+    </button>
+
+    <!-- 中央: アイコン -->
+    <a href="/" class="justify-self-center">
+      <Image
+        src={kumo}
+        alt="Hydrometeor"
+        width={40}
+        height={40}
+        class="object-contain"
+      />
+    </a>
+
+    <!-- 右: 空白（レイアウト調整用） -->
+    <div></div>
+  </div>
+
+  <!-- モバイル: ドロップダウンメニュー -->
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-neutral-200">
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block px-8 py-4 text-sm tracking-widest uppercase border-b border-neutral-100 hover:bg-neutral-50 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle")
+  const menu = document.getElementById("mobile-menu")
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = !menu?.classList.contains("hidden")
+    menu?.classList.toggle("hidden", isOpen)
+    toggle.setAttribute("aria-expanded", String(!isOpen))
+  })
+</script>
