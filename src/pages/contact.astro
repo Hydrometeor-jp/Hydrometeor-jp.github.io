@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets"
+import Layout from "../layouts/Layout.astro"
+import IconLink from "../components/IconLink.astro"
+import icon from "../assets/icon.jpg"
+
+const SNS_LINKS = [
+  { url: "https://soundcloud.com/hydrometeor_jp", label: "SoundCloud" },
+  { url: "https://x.com/Hydrometeor_", label: "X" },
+  { url: "https://hydrometeor.bandcamp.com/", label: "Bandcamp" },
+  { url: "https://www.youtube.com/@hydrometeor_jp", label: "YouTube" },
+  // { url: "https://www.instagram.com/hydrometeor", label: "Instagram" },
+]
+
+const EMAIL = "hydrometeor.jp@gmail.com"
+---
+
+<Layout title="Contact">
+  <section
+    class="max-w-4xl mx-auto px-8 py-16 flex flex-col items-center gap-16"
+  >
+    <!-- レーベルアイコン -->
+    <Image
+      src={icon}
+      alt="Hydrometeor"
+      width={240}
+      height={240}
+      class="object-contain rounded-full"
+    />
+
+    <!-- SNS リンク -->
+    <div class="flex flex-col items-center gap-8">
+      <h2 class="tracking-widest uppercase">Follow Us</h2>
+      <div class="flex gap-8">
+        {
+          SNS_LINKS.map((link) => (
+            <IconLink url={link.url} label={link.label} />
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- メールアドレス -->
+    <div class="flex flex-col items-center gap-4">
+      <h2 class="tracking-widest uppercase">Contact</h2>
+      <a
+        href={`mailto:${EMAIL}`}
+        class="text-sm hover:text-neutral-500 transition-colors"
+      >
+        {EMAIL}
+      </a>
+    </div>
+  </section>
+</Layout>

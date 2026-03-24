@@ -44,7 +44,7 @@ export type News = {
   date: MicroCMSDate
 } & MicroCMSListContent
 
-// API: Submissions
+// API: 公募情報
 // https://hydrometeor.microcms.io/apis/submissions
 export type Submission = {
   title: string

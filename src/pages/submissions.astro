@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro"
+import { getSubmissionsList } from "../libs/microcms"
+
+const submissions = await getSubmissionsList()
+---
+
+<Layout title="Submissions">
+  <section class="max-w-4xl mx-auto px-8 py-16">
+    <h1 class="tracking-widest uppercase mb-8">Submissions</h1>
+    <div class="flex flex-col gap-16">
+      {
+        submissions.map((submission) => (
+          <article>
+            <h2 class="text-2xl mb-4">{submission.title}</h2>
+            <div
+              class="prose prose-base prose-neutral max-w-none"
+              set:html={submission.body}
+            />
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
