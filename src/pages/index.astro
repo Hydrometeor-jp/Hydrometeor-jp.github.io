@@ -1,11 +1,68 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { Image } from "astro:assets"
+// import Welcome from "../components/Welcome.astro"
+import Layout from "../layouts/Layout.astro"
+import { getAlbums } from "../libs/microcms"
+import { paddingZero } from "../libs/util"
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import kumoIcon from "../assets/kumo.png"
+
+const albums = await getAlbums()
 ---
 
 <Layout>
-	<Welcome />
+  <nav class="w-full h-14 grid grid-cols-[1fr_auto_1fr] items-center px-8">
+    <div class="flex gap-4">
+      <div>Home</div>
+      <div>Music</div>
+      <div>Contact</div>
+    </div>
+    <div class="h-12">
+      <Image width={48} height={48} alt="icon" src={kumoIcon} />
+    </div>
+  </nav>
+  <div class="max-w-4xl mx-auto px-4 py-6">
+    <h2 class="text-4xl mb-4">Hydrometeor</h2>
+    <h2 class="text-3xl mb-3">Albums</h2>
+    <div class="flex flex-col gap-8">
+      {
+        albums.contents.map((album) => (
+          <div>
+            <div class="text-2xl mb-2">{album.title}</div>
+            <div class="flex flex-col gap-4">
+              <div>
+                <Image
+                  src={album.thumbnail.url}
+                  alt={album.thumbnail.alt || "thumbnail"}
+                  inferSize={true}
+                  width={300}
+                  height={300}
+                />
+              </div>
+              <div>
+                {(album.trackList ?? []).map((track, i) => (
+                  <div class="flex flex-nowrap gap-2">
+                    <div>{paddingZero(i + 1, 2)}. </div>
+                    <div>
+                      {track.artistLinks.map((artistLink) =>
+                        artistLink.url ? (
+                          <a href={artistLink.url}>{artistLink.name}</a>
+                        ) : (
+                          <span class="text-neutral-700">
+                            {artistLink.name}
+                          </span>
+                        ),
+                      )}
+                    </div>
+                    <div>-</div>
+                    <div>{track.title}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </Layout>

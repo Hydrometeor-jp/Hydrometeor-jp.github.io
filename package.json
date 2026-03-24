@@ -7,11 +7,36 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint --fix .",
+    "format": "prettier --write .",
+    "check": "npm run lint && npm run format",
+    "prepare": "husky"
   },
   "dependencies": {
-    "astro": "^6.0.8"
+    "@astrojs/check": "^0.9.8",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.0.8",
+    "microcms-js-sdk": "^3.3.0",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "8.57.1",
+    "eslint": "9.39.4",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-astro": "1.6.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.4.0",
+    "prettier": "3.8.1",
+    "prettier-plugin-astro": "0.14.1"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,md,json,astro,css}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
