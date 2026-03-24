@@ -34,6 +34,8 @@ export type Album = {
   iconLinks?: string
   spotifyAlbumID?: string
   youtubeMovieID?: string
+  soundcloudEmbedUrl?: string
+  bandcampEmbedUrl?: string
   trackList?: Track[]
 } & MicroCMSListContent
 
