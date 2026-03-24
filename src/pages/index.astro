@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets"
-import Layout from "../layouts/Layout.astro"
-import { getNewsList } from "../libs/microcms"
-import { formatDate } from "../libs/util"
-import bandcampHeader from "../assets/bandcamp_header.png"
+import Layout from "@/layouts/Layout.astro"
+import { getNewsList } from "@/libs/microcms"
+import { formatDate } from "@/libs/util"
+import bandcampHeader from "@/assets/bandcamp_header.png"
 
 const newsList = await getNewsList()
 ---

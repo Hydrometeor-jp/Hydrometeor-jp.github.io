@@ -1,7 +1,7 @@
 ---
-import Layout from "../../layouts/Layout.astro"
-import { getMusicList } from "../../libs/microcms"
-import { toAlbumSlug } from "../../libs/util"
+import Layout from "@/layouts/Layout.astro"
+import { getMusicList } from "@/libs/microcms"
+import { toAlbumSlug } from "@/libs/util"
 
 const { contents: albums } = await getMusicList()
 ---

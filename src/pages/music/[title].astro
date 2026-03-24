@@ -1,13 +1,11 @@
 ---
-import IconLink from "../../components/IconLink.astro"
-import Layout from "../../layouts/Layout.astro"
-import { getMusicList } from "../../libs/microcms"
-import { paddingZero, toAlbumSlug } from "../../libs/util"
+import IconLink from "@/components/IconLink.astro"
+import Layout from "@/layouts/Layout.astro"
+import { getMusicList } from "@/libs/microcms"
+import { paddingZero, toAlbumSlug } from "@/libs/util"
 
 export async function getStaticPaths() {
   const { contents: albums } = await getMusicList()
-  console.log("albums")
-  console.log(albums)
   return albums.map((album) => ({
     params: { title: toAlbumSlug(album.title) },
     props: { album },
