@@ -8,6 +8,10 @@ const navLinks = [
   { label: "Submissions", href: "/submissions" },
   { label: "Contact", href: "/contact" },
 ]
+
+const currentPath = Astro.url.pathname
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href)
 ---
 
 <header class="w-screen overflow-hidden border-b border-neutral-200">
@@ -18,7 +22,7 @@ const navLinks = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-sm tracking-widest uppercase hover:text-neutral-500 transition-colors"
+            class={`text-sm tracking-widest uppercase hover:text-neutral-500 transition-colors ${isActive(link.href) ? "underline underline-offset-4 decoration-neutral-400" : ""}`}
           >
             {link.label}
           </a>
@@ -70,7 +74,7 @@ const navLinks = [
       navLinks.map((link) => (
         <a
           href={link.href}
-          class="block px-8 py-4 text-sm tracking-widest uppercase border-b border-neutral-100 hover:bg-neutral-50 transition-colors"
+          class={`block px-8 py-4 text-sm tracking-widest uppercase border-b border-neutral-100 hover:bg-neutral-50 transition-colors ${isActive(link.href) ? "underline underline-offset-4" : ""}`}
         >
           {link.label}
         </a>

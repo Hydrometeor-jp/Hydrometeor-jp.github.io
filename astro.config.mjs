@@ -14,5 +14,5 @@ export default defineConfig({
   },
   trailingSlash: "never",
   integrations: [preact({ compat: true })],
-  site: 'https://hydrometeor-music.github.io',
+  site: "https://hydrometeor-music.github.io",
 })
