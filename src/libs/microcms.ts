@@ -12,22 +12,22 @@ const client = createClient({
 })
 
 // カスタムフィールド: アーティストリンク
-// https://hydrometeor.microcms.io/apis/albums/custom-fields/artistLink
+// https://hydrometeor.microcms.io/apis/music/custom-fields/artistLink
 export type ArtistLink = {
   name: string
   url?: string
 }
 
 // カスタムフィールド: トラック
-// https://hydrometeor.microcms.io/apis/albums/custom-fields/track
+// https://hydrometeor.microcms.io/apis/music/custom-fields/track
 export type Track = {
   title: string
   artistLinks: ArtistLink[]
 }
 
 // API: アルバム情報
-// https://hydrometeor.microcms.io/apis/albums
-export type Album = {
+// https://hydrometeor.microcms.io/apis/music
+export type Music = {
   title: string
   releaseDate: MicroCMSDate
   thumbnail: MicroCMSImage
@@ -54,12 +54,12 @@ export type Submission = {
 } & MicroCMSListContent
 
 export const getMusicList = async (queries?: MicroCMSQueries) => {
-  return await client.getList<Album>({ endpoint: "albums", queries })
+  return await client.getList<Music>({ endpoint: "music", queries })
 }
 
-export const getMusicByTitle = async (title: string): Promise<Album | null> => {
-  const result = await client.getList<Album>({
-    endpoint: "albums",
+export const getMusicByTitle = async (title: string): Promise<Music | null> => {
+  const result = await client.getList<Music>({
+    endpoint: "music",
     queries: { filters: `title[equals]${title}`, limit: 1 },
   })
   return result.contents[0] ?? null
@@ -81,8 +81,8 @@ export const getSubmissionsList = async (): Promise<Submission[]> => {
 }
 
 export const getAlbumPreview = (contentId: string, draftKey: string) =>
-  client.getListDetail<Album>({
-    endpoint: "albums",
+  client.getListDetail<Music>({
+    endpoint: "music",
     contentId,
     queries: { draftKey },
   })

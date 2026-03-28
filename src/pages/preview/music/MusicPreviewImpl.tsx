@@ -1,36 +1,23 @@
----
-import IconLink from "@/components/IconLink.astro"
-import Layout from "@/layouts/Layout.astro"
-import { getMusicList } from "@/libs/microcms"
-import { paddingZero, toMusicSlug } from "@/libs/util"
+import IconLink from "@/components/IconLink"
+import type { Music } from "@/libs/microcms"
+import { paddingZero } from "@/libs/util"
 
-export async function getStaticPaths() {
-  const { contents: music } = await getMusicList()
-  return music.map((music) => ({
-    params: { title: toMusicSlug(music.title) },
-    props: { music },
-  }))
-}
+export default function MusicPreviewImpl({ music }: { music: Music }) {
+  return (
+    <section class="max-w-4xl mx-auto px-8 py-16">
+      <div class="flex flex-col md:flex-row gap-16">
+        {/* サムネイル */}
+        <div class="shrink-0">
+          <img
+            src={`${music.thumbnail.url}?w=600&fm=webp`}
+            alt={music.thumbnail.alt ?? music.title}
+            width={300}
+            height={300}
+            class="w-full md:w-72 object-cover"
+          />
 
-const { music } = Astro.props
----
-
-<Layout title={music.title}>
-  <section class="max-w-4xl mx-auto px-8 py-16">
-    <div class="flex flex-col md:flex-row gap-16">
-      <!-- サムネイル -->
-      <div class="shrink-0">
-        <img
-          src={`${music.thumbnail.url}?w=600&fm=webp`}
-          alt={music.thumbnail.alt ?? music.title}
-          width={300}
-          height={300}
-          class="w-full md:w-72 object-cover"
-        />
-
-        <div class="mt-8">
-          {
-            music.iconLinks && (
+          <div class="mt-8">
+            {music.iconLinks && (
               <div class="flex gap-2 justify-center">
                 {music.iconLinks
                   .split("\n")
@@ -40,17 +27,15 @@ const { music } = Astro.props
                     <IconLink url={url} />
                   ))}
               </div>
-            )
-          }
+            )}
+          </div>
         </div>
-      </div>
 
-      <!-- タイトル + トラックリスト -->
-      <div class="flex flex-col gap-8">
-        <h1 class="text-2xl">{music.title}</h1>
+        {/* <!-- タイトル + トラックリスト --> */}
+        <div class="flex flex-col gap-8">
+          <h1 class="text-2xl">{music.title}</h1>
 
-        {
-          music.trackList && music.trackList.length > 0 && (
+          {music.trackList && music.trackList.length > 0 && (
             <ol class="flex flex-col gap-2">
               {music.trackList.map((track, i) => (
                 <li class="grid grid-cols-[2rem_1fr] gap-x-4 text-sm">
@@ -81,12 +66,10 @@ const { music } = Astro.props
                 </li>
               ))}
             </ol>
-          )
-        }
+          )}
+        </div>
       </div>
-    </div>
-    {
-      (music.spotifyAlbumID ||
+      {(music.spotifyAlbumID ||
         music.bandcampEmbedUrl ||
         music.soundcloudEmbedUrl ||
         music.youtubeMovieID) && (
@@ -130,14 +113,14 @@ const { music } = Astro.props
                 src={`https://www.youtube.com/embed/${music.youtubeMovieID}`}
                 title={`${music.title} - YouTube`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
                 loading="lazy"
                 class="absolute inset-0 w-full h-full"
               />
             </div>
           )}
         </div>
-      )
-    }
-  </section>
-</Layout>
+      )}
+    </section>
+  )
+}

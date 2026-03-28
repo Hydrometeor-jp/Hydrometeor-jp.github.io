@@ -1,9 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro"
 import { getMusicList } from "@/libs/microcms"
-import { toAlbumSlug } from "@/libs/util"
+import { toMusicSlug } from "@/libs/util"
 
-const { contents: albums } = await getMusicList()
+const { contents: music } = await getMusicList()
 ---
 
 <Layout title="Music">
@@ -11,19 +11,19 @@ const { contents: albums } = await getMusicList()
     <h1 class="tracking-widest uppercase mb-8">Music</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       {
-        albums.map((album) => (
-          <a href={`/music/${toAlbumSlug(album.title)}`} class="block group">
+        music.map((music) => (
+          <a href={`/music/${toMusicSlug(music.title)}`} class="block group">
             <div class="relative">
               <img
-                src={`${album.thumbnail.url}?w=400&fm=webp`}
-                alt={album.thumbnail.alt ?? album.title}
+                src={`${music.thumbnail.url}?w=400&fm=webp`}
+                alt={music.thumbnail.alt ?? music.title}
                 width={400}
                 height={400}
                 class="w-full object-cover"
               />
               <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
             </div>
-            <p class="mt-4 text-sm">{album.title}</p>
+            <p class="mt-4 text-sm">{music.title}</p>
           </a>
         ))
       }

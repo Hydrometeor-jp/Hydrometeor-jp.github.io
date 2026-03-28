@@ -9,7 +9,7 @@ export function paddingZero(value: number, digit: number) {
   }
 }
 
-export function toAlbumSlug(title: string): string {
+export function toMusicSlug(title: string): string {
   return title.toLowerCase().replace(/\s+/g, "-")
 }
 
