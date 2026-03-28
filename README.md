@@ -1,8 +1,7 @@
-# Astro Starter Kit: Basics
+# Hydrometeor-jp.github.io
 
 ## TODO
 
-- SoundCloud Embed
 - ダークモード
 - ブログ
   - リスト

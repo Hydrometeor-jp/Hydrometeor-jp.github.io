@@ -1,8 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages w/Astro, microCMS
 
 on:
   push:
     branches: [ main ]
+  repository_dispatch:
+    types: [microcms_build]
   workflow_dispatch:
 
 permissions:
@@ -20,8 +22,6 @@ jobs:
         uses: withastro/action@v5
         with:
           node-version: 24
-        # env:
-          # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # 変数の値にはシングルクォートを使用してください。（オプション）
 
   deploy:
     needs: build
