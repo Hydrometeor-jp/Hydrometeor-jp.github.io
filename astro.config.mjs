@@ -12,7 +12,7 @@ export default defineConfig({
   image: {
     domains: ["images.microcms-assets.io"],
   },
-  trailingSlash: "never",
+  trailingSlash: "always",
   integrations: [preact({ compat: true })],
   site: "https://hydrometeor-music.github.io",
 })

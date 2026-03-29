@@ -40,7 +40,7 @@ export default function MusicPreviewImpl({ music }: { music: Music }) {
               {music.trackList.map((track, i) => (
                 <li class="grid grid-cols-[2rem_1fr] gap-x-4 text-sm">
                   <span class="text-neutral-400">{paddingZero(i + 1, 2)}</span>
-                  <span class="flex flex-wrap gap-x-1">
+                  <span>
                     {track.artistLinks.map((artist, j) => (
                       <>
                         {artist.url ? (
@@ -48,7 +48,7 @@ export default function MusicPreviewImpl({ music }: { music: Music }) {
                             href={artist.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="hover:text-neutral-500 transition-colors"
+                            class="underline hover:text-neutral-500 transition-colors"
                           >
                             {artist.name}
                           </a>
@@ -56,11 +56,11 @@ export default function MusicPreviewImpl({ music }: { music: Music }) {
                           <span>{artist.name}</span>
                         )}
                         {j < track.artistLinks.length - 1 && (
-                          <span class="text-neutral-400">,</span>
+                          <span class="text-neutral-400 mr-1">, </span>
                         )}
                       </>
                     ))}
-                    <span class="text-neutral-400">—</span>
+                    <span class="text-neutral-400 mx-2">—</span>
                     <span>{track.title}</span>
                   </span>
                 </li>

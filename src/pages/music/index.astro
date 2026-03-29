@@ -12,7 +12,7 @@ const { contents: music } = await getMusicList()
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       {
         music.map((music) => (
-          <a href={`/music/${toMusicSlug(music.title)}`} class="block group">
+          <a href={`/music/${toMusicSlug(music.title)}/`} class="block group">
             <div class="relative">
               <img
                 src={`${music.thumbnail.url}?w=400&fm=webp`}
