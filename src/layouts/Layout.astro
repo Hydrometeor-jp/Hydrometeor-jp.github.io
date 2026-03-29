@@ -25,6 +25,16 @@ const pageTitle = title ? `${title} | Hydrometeor` : "Hydrometeor"
       href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Zen+Old+Mincho&display=swap"
       rel="stylesheet"
     />
+    <script is:inline>
+      document.documentElement.setAttribute(
+        "data-theme",
+        localStorage.theme === "dark" ||
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+          ? "dark"
+          : "light",
+      )
+    </script>
   </head>
   <body class="overflow-x-hidden">
     <NavBar />

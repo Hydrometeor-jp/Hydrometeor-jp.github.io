@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import kumo from "@/assets/kumo.png"
+import ThemeIcon from "./ThemeIcon.astro"
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -22,7 +23,7 @@ const isActive = (href: string) =>
         navLinks.map((link) => (
           <a
             href={link.href}
-            class={`text-sm tracking-widest uppercase hover:text-neutral-500 transition-colors ${isActive(link.href) ? "underline underline-offset-4 decoration-neutral-400" : ""}`}
+            class={`text-sm tracking-widest uppercase hover:opacity-80 transition-opacity ${isActive(link.href) ? "underline underline-offset-4 decoration-neutral-400" : ""}`}
           >
             {link.label}
           </a>
@@ -34,18 +35,19 @@ const isActive = (href: string) =>
     <div class="lg:hidden"></div>
 
     <!-- 中央: アイコン -->
-    <a href="/" class="justify-self-center">
+    <a href="/" class="bg-white justify-self-center p-1 rounded-full">
       <Image
         src={kumo}
         alt="Hydrometeor"
-        width={40}
-        height={40}
+        width={32}
+        height={32}
         class="object-contain"
       />
     </a>
 
     <!-- 右: ハンバーガー / バツボタン（モバイル・タブレット） -->
     <div class="flex justify-end">
+      <ThemeIcon class="hidden lg:inline-block" />
       <button
         id="menu-toggle"
         class="lg:hidden"
@@ -54,9 +56,9 @@ const isActive = (href: string) =>
       >
         <!-- ハンバーガーアイコン -->
         <span id="icon-open" class="flex flex-col gap-1 w-6">
-          <span class="block w-full h-px bg-neutral-900"></span>
-          <span class="block w-full h-px bg-neutral-900"></span>
-          <span class="block w-full h-px bg-neutral-900"></span>
+          <span class="block w-full h-px bg-current"></span>
+          <span class="block w-full h-px bg-current"></span>
+          <span class="block w-full h-px bg-current"></span>
         </span>
         <!-- バツアイコン -->
         <span

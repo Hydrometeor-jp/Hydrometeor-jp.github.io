@@ -14,7 +14,7 @@ const submissions = await getSubmissionsList()
           <article>
             <h2 class="text-2xl mb-4">{submission.title}</h2>
             <div
-              class="prose prose-base prose-neutral max-w-none"
+              class="prose prose-base prose-neutral dark:prose-invert max-w-none"
               set:html={submission.body}
             />
           </article>
