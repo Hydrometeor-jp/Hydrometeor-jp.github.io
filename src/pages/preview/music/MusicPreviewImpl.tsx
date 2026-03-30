@@ -76,7 +76,7 @@ export default function MusicPreviewImpl({ music }: { music: Music }) {
         <div class="flex flex-col gap-8 mt-16">
           {music.spotifyAlbumID && (
             <iframe
-              src={`https://open.spotify.com/embed/music/${music.spotifyAlbumID}`}
+              src={`https://open.spotify.com/embed/album/${music.spotifyAlbumID}?utm_source=generator`}
               title={`${music.title} - Spotify`}
               width="100%"
               height="352"
