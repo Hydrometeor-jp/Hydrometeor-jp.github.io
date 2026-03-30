@@ -1,0 +1,42 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { getBlogsList } from "@/libs/microcms"
+import { formatDate } from "@/libs/util"
+
+export async function getStaticPaths() {
+  const blogs = await getBlogsList()
+  return blogs.map((blog) => ({
+    params: { id: blog.id },
+    props: { blog },
+  }))
+}
+
+const { blog } = Astro.props
+---
+
+<Layout title={blog.title}>
+  <section class="max-w-4xl mx-auto px-8 py-16">
+    <a
+      href="/blogs/"
+      class="text-sm text-neutral-500 dark:text-neutral-400 hover:underline mb-8 block"
+      >← Blogs</a
+    >
+    <h1 class="text-3xl mb-4">{blog.title}</h1>
+    {
+      (blog.publishedAt || blog.updatedAt) && (
+        <div class="text-sm text-neutral-500 dark:text-neutral-400 mb-8 flex gap-4">
+          {blog.publishedAt && (
+            <span>公開日: {formatDate(blog.publishedAt)}</span>
+          )}
+          {blog.updatedAt && (
+            <span>最終更新日: {formatDate(blog.updatedAt)}</span>
+          )}
+        </div>
+      )
+    }
+    <div
+      class="prose prose-base prose-neutral dark:prose-invert max-w-none"
+      set:html={blog.body}
+    />
+  </section>
+</Layout>

@@ -1,0 +1,50 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { getBlogsList } from "@/libs/microcms"
+import { formatDate } from "@/libs/util"
+
+const blogs = await getBlogsList()
+---
+
+<Layout title="Blogs">
+  <section class="max-w-4xl mx-auto px-8 py-16">
+    <h1 class="tracking-widest uppercase mb-8">Blogs</h1>
+    {blogs.length === 0 && <p>Coming soon...</p>}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {
+        blogs.map((blog) => (
+          <a
+            href={`/blogs/${blog.id}/`}
+            class="block group border border-neutral-500/50 rounded-lg overflow-hidden"
+          >
+            <article class="flex flex-col">
+              {blog.thumbnail ? (
+                <div class="shrink-0">
+                  <img
+                    src={`${blog.thumbnail.url}?w=400&fm=webp`}
+                    alt={blog.thumbnail.alt ?? blog.title}
+                    width={200}
+                    height={200}
+                    class="w-full h-48 object-cover"
+                  />
+                </div>
+              ) : (
+                <div class="shrink-0 w-full h-48 bg-neutral-200 flex justify-center items-center">
+                  <span class="text-neutral-500">No Image</span>
+                </div>
+              )}
+              <div class="flex flex-col gap-2 px-4 py-4">
+                <h2 class="text-xl">{blog.title}</h2>
+                {blog.publishedAt && (
+                  <p class="text-sm text-neutral-500 dark:text-neutral-400">
+                    {formatDate(blog.publishedAt)}
+                  </p>
+                )}
+              </div>
+            </article>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

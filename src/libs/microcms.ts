@@ -47,10 +47,11 @@ export type News = {
 } & MicroCMSListContent
 
 // API: 公募情報
-// https://hydrometeor.microcms.io/apis/submissions
-export type Submission = {
+// https://hydrometeor.microcms.io/apis/blogs
+export type Blog = {
   title: string
   body: string
+  thumbnail: MicroCMSImage
 } & MicroCMSListContent
 
 export const getMusicList = async (queries?: MicroCMSQueries) => {
@@ -73,11 +74,19 @@ export const getNewsList = async (): Promise<News[]> => {
   return result.contents
 }
 
-export const getSubmissionsList = async (): Promise<Submission[]> => {
-  const result = await client.getList<Submission>({
-    endpoint: "submissions",
+export const getBlogsList = async (): Promise<Blog[]> => {
+  const result = await client.getList<Blog>({
+    endpoint: "blogs",
+    queries: { orders: "-publishedAt" },
   })
   return result.contents
+}
+
+export const getBlogDetail = async (id: string): Promise<Blog> => {
+  return await client.getListDetail<Blog>({
+    endpoint: "blogs",
+    contentId: id,
+  })
 }
 
 export const getAlbumPreview = (contentId: string, draftKey: string) =>
@@ -87,9 +96,9 @@ export const getAlbumPreview = (contentId: string, draftKey: string) =>
     queries: { draftKey },
   })
 
-export const getSubmissionPreview = (contentId: string, draftKey: string) =>
-  client.getListDetail<Submission>({
-    endpoint: "submissions",
+export const getBlogPreview = (contentId: string, draftKey: string) =>
+  client.getListDetail<Blog>({
+    endpoint: "blogs",
     contentId,
     queries: { draftKey },
   })
