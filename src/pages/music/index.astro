@@ -7,12 +7,12 @@ const { contents: music } = await getMusicList()
 ---
 
 <Layout title="Music">
-  <section class="max-w-screen-xl mx-auto px-8 py-16">
-    <h1 class="tracking-widest uppercase mb-8">Music</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+  <section class="mx-auto max-w-screen-xl px-8 py-16">
+    <h1 class="mb-8 tracking-widest uppercase">Music</h1>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
       {
         music.map((music) => (
-          <a href={`/music/${toMusicSlug(music.title)}/`} class="block group">
+          <a href={`/music/${toMusicSlug(music.title)}/`} class="group block">
             <div class="relative">
               <img
                 src={`${music.thumbnail.url}?w=400&fm=webp`}
@@ -21,7 +21,7 @@ const { contents: music } = await getMusicList()
                 height={400}
                 class="w-full object-cover"
               />
-              <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+              <div class="absolute inset-0 bg-white opacity-0 transition-opacity group-hover:opacity-20" />
             </div>
             <p class="mt-4 text-sm">{music.title}</p>
           </a>

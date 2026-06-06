@@ -7,15 +7,15 @@ const blogs = await getBlogsList()
 ---
 
 <Layout title="Blogs">
-  <section class="max-w-4xl mx-auto px-8 py-16">
-    <h1 class="tracking-widest uppercase mb-8">Blogs</h1>
+  <section class="mx-auto max-w-4xl px-8 py-16">
+    <h1 class="mb-8 tracking-widest uppercase">Blogs</h1>
     {blogs.length === 0 && <p>Coming soon...</p>}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
       {
         blogs.map((blog) => (
           <a
             href={`/blogs/${blog.id}/`}
-            class="block group border border-neutral-500/50 rounded-lg overflow-hidden"
+            class="group block overflow-hidden rounded-lg border border-neutral-500/50"
           >
             <article class="flex flex-col">
               {blog.thumbnail ? (
@@ -25,11 +25,11 @@ const blogs = await getBlogsList()
                     alt={blog.thumbnail.alt ?? blog.title}
                     width={200}
                     height={200}
-                    class="w-full h-48 object-cover"
+                    class="h-48 w-full object-cover"
                   />
                 </div>
               ) : (
-                <div class="shrink-0 w-full h-48 bg-neutral-200 flex justify-center items-center">
+                <div class="flex h-48 w-full shrink-0 items-center justify-center bg-neutral-200">
                   <span class="text-neutral-500">No Image</span>
                 </div>
               )}

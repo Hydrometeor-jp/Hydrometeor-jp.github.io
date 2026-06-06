@@ -1,8 +1,10 @@
 ---
 import { Image } from "astro:assets"
+
 import Layout from "@/layouts/Layout.astro"
 import { getNewsList } from "@/libs/microcms"
 import { formatDate } from "@/libs/util"
+
 import bandcampHeader from "@/assets/bandcamp_header.png"
 
 const newsList = await getNewsList()
@@ -21,8 +23,8 @@ const newsList = await getNewsList()
   </div>
 
   <!-- ニュースセクション -->
-  <section class="max-w-4xl mx-auto px-8 py-16">
-    <h2 class="tracking-widest uppercase mb-8">News</h2>
+  <section class="mx-auto max-w-4xl px-8 py-16">
+    <h2 class="mb-8 tracking-widest uppercase">News</h2>
     <ul class="flex flex-col gap-4">
       {
         newsList.map((news) => (

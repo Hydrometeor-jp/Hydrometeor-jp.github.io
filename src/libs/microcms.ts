@@ -1,10 +1,11 @@
+import { createClient } from "microcms-js-sdk"
+
 import type {
   MicroCMSDate,
   MicroCMSImage,
   MicroCMSListContent,
   MicroCMSQueries,
 } from "microcms-js-sdk"
-import { createClient } from "microcms-js-sdk"
 
 const client = createClient({
   serviceDomain: import.meta.env.PUBLIC_MICROCMS_SERVICE_DOMAIN,

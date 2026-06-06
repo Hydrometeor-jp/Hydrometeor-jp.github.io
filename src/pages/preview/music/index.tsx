@@ -1,7 +1,7 @@
 import useSWR from "swr"
-import { getAlbumPreview } from "@/libs/microcms"
 
 import MusicPreviewImpl from "./MusicPreviewImpl"
+import { getAlbumPreview } from "@/libs/microcms"
 
 export default function MusicPreview() {
   const params = new URLSearchParams(window.location.search)

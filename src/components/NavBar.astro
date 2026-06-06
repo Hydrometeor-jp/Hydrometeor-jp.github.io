@@ -1,7 +1,9 @@
 ---
 import { Image } from "astro:assets"
-import kumo from "@/assets/kumo.png"
+
 import ThemeIcon from "./ThemeIcon.astro"
+
+import kumo from "@/assets/kumo.png"
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -15,15 +17,15 @@ const isActive = (href: string) =>
   href === "/" ? currentPath === "/" : currentPath.startsWith(href)
 ---
 
-<header class="w-screen border-b border-neutral-200 dark:border-neutral-700">
-  <div class="grid grid-cols-[1fr_auto_1fr] items-center px-8 h-16">
+<header class="w-full border-b border-neutral-200 dark:border-neutral-700">
+  <div class="grid h-16 grid-cols-[1fr_auto_1fr] items-center px-8">
     <!-- デスクトップ: ナビリンク（左） -->
-    <nav class="hidden lg:flex gap-8">
+    <nav class="hidden gap-8 lg:flex">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class={`text-sm tracking-widest uppercase hover:opacity-80 transition-opacity ${isActive(link.href) ? "underline underline-offset-4 decoration-neutral-400" : ""}`}
+            class={`text-sm tracking-widest uppercase transition-opacity hover:opacity-80 ${isActive(link.href) ? "underline decoration-neutral-400 underline-offset-4" : ""}`}
           >
             {link.label}
           </a>
@@ -35,7 +37,7 @@ const isActive = (href: string) =>
     <div class="lg:hidden"></div>
 
     <!-- 中央: アイコン -->
-    <a href="/" class="bg-white justify-self-center p-1 rounded-full">
+    <a href="/" class="justify-self-center rounded-full bg-white p-1">
       <Image
         src={kumo}
         alt="Hydrometeor"
@@ -55,15 +57,15 @@ const isActive = (href: string) =>
         aria-expanded="false"
       >
         <!-- ハンバーガーアイコン -->
-        <span id="icon-open" class="flex flex-col gap-1 w-6">
-          <span class="block w-full h-px bg-current"></span>
-          <span class="block w-full h-px bg-current"></span>
-          <span class="block w-full h-px bg-current"></span>
+        <span id="icon-open" class="flex w-6 flex-col gap-1">
+          <span class="block h-px w-full bg-current"></span>
+          <span class="block h-px w-full bg-current"></span>
+          <span class="block h-px w-full bg-current"></span>
         </span>
         <!-- バツアイコン -->
         <span
           id="icon-close"
-          class="hidden w-6 h-6 items-center justify-center text-xl leading-none"
+          class="hidden h-6 w-6 items-center justify-center text-xl leading-none"
           >✕</span
         >
       </button>
@@ -71,12 +73,12 @@ const isActive = (href: string) =>
   </div>
 
   <!-- モバイル: ドロップダウンメニュー -->
-  <nav id="mobile-menu" class="hidden lg:hidden border-t border-neutral-200">
+  <nav id="mobile-menu" class="hidden border-t border-neutral-200 lg:hidden">
     {
       navLinks.map((link) => (
         <a
           href={link.href}
-          class={`block px-8 py-4 text-sm tracking-widest uppercase border-b border-neutral-100 hover:bg-neutral-50 transition-colors ${isActive(link.href) ? "underline underline-offset-4" : ""}`}
+          class={`block border-b border-neutral-100 px-8 py-4 text-sm tracking-widest uppercase transition-colors hover:bg-neutral-50 ${isActive(link.href) ? "underline underline-offset-4" : ""}`}
         >
           {link.label}
         </a>
