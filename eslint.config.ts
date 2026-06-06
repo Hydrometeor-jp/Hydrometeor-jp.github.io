@@ -1,9 +1,9 @@
 import js from "@eslint/js"
-import globals from "globals"
-import eslintPluginAstro from "eslint-plugin-astro"
-import eslintConfigPrettier from "eslint-config-prettier"
-import { defineConfig, globalIgnores } from "eslint/config"
 import typescriptParser from "@typescript-eslint/parser"
+import { defineConfig, globalIgnores } from "eslint/config"
+import eslintConfigPrettier from "eslint-config-prettier"
+import eslintPluginAstro from "eslint-plugin-astro"
+import globals from "globals"
 
 export default defineConfig([
   globalIgnores([".astro", "dist"]),

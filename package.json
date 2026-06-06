@@ -36,7 +36,8 @@
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
     "prettier": "3.8.3",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "^0.8.0"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,md,json,astro,css}": [
