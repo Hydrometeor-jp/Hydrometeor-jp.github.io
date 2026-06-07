@@ -61,7 +61,7 @@ const isActive = (href: string) =>
       <ThemeIcon class="hidden lg:inline-block" />
       <button
         id="menu-toggle"
-        class="lg:hidden"
+        class="cursor-pointer lg:hidden"
         aria-label="メニューを開く"
         aria-expanded="false"
       >
@@ -90,13 +90,13 @@ const isActive = (href: string) =>
       {
         navLinks.map((link) =>
           isActive(link.href) ? (
-            <div class="block border-b border-neutral-100 px-8 py-4 text-sm tracking-widest uppercase underline underline-offset-4 dark:border-neutral-700">
+            <div class="block border-b border-neutral-100 px-8 py-4 text-center text-sm tracking-widest uppercase underline underline-offset-4 dark:border-neutral-700">
               {link.label}
             </div>
           ) : (
             <a
               href={link.href}
-              class="block border-b border-neutral-100 px-8 py-4 text-sm tracking-widest uppercase transition-colors hover:bg-neutral-50 dark:border-neutral-700"
+              class="block border-b border-neutral-100 px-8 py-4 text-center text-sm tracking-widest uppercase transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
             >
               {link.label}
             </a>
@@ -104,7 +104,7 @@ const isActive = (href: string) =>
         )
       }
       <div
-        class="border-b border-neutral-100 px-8 py-4 dark:border-neutral-700"
+        class="border-b border-neutral-100 px-8 py-4 text-center dark:border-neutral-700"
       >
         <ThemeIcon />
       </div>
