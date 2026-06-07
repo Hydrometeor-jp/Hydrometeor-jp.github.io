@@ -30,9 +30,9 @@ const EMAIL = "hydrometeor.jp@gmail.com"
     />
 
     <!-- SNS リンク -->
-    <div class="flex flex-col items-center gap-8">
+    <div class="flex w-full flex-col items-center gap-8">
       <h2 class="tracking-widest uppercase">Follow Us</h2>
-      <div class="flex gap-8">
+      <div class="flex w-full max-w-60 justify-between gap-2">
         {
           SNS_LINKS.map((link) => (
             <IconLink url={link.url} label={link.label} />

@@ -5,8 +5,7 @@ const { class: className } = Astro.props
 ---
 
 <button
-  id="themeToggle"
-  class={`border-0 bg-none hover:opacity-80 cursor-pointer ${className || ""}`}
+  class={`js-theme-toggle border-0 bg-none hover:opacity-80 cursor-pointer ${className || ""}`}
   aria-label="テーマを切り替える"
 >
   <Sun aria-hidden="true" class="w-7.5 dark:hidden" />
@@ -14,45 +13,52 @@ const { class: className } = Astro.props
 </button>
 
 <script is:inline>
-  const theme = (() => {
-    const localStorageTheme = localStorage?.getItem("theme") ?? ""
-    if (["dark", "light"].includes(localStorageTheme)) {
-      return localStorageTheme
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark"
-    }
-    return "light"
-  })()
+  // 複数インスタンスを配置しても初期化・バインドは一度だけ行う
+  if (!window.__themeToggleInit) {
+    window.__themeToggleInit = true
 
-  if (theme === "light") {
-    document.documentElement.removeAttribute("data-theme")
-  } else {
-    document.documentElement.setAttribute("data-theme", "dark")
-  }
+    const theme = (() => {
+      const localStorageTheme = localStorage?.getItem("theme") ?? ""
+      if (["dark", "light"].includes(localStorageTheme)) {
+        return localStorageTheme
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark"
+      }
+      return "light"
+    })()
 
-  window.localStorage.setItem("theme", theme)
-
-  const handleToggleClick = () => {
-    const element = document.documentElement
-
-    if (
-      element.hasAttribute("data-theme") &&
-      element.getAttribute("data-theme") === "dark"
-    ) {
-      element.removeAttribute("data-theme")
+    if (theme === "light") {
+      document.documentElement.removeAttribute("data-theme")
     } else {
-      element.setAttribute("data-theme", "dark")
+      document.documentElement.setAttribute("data-theme", "dark")
     }
 
-    const isDark =
-      element.hasAttribute("data-theme") &&
-      element.getAttribute("data-theme") === "dark"
+    window.localStorage.setItem("theme", theme)
 
-    localStorage.setItem("theme", isDark ? "dark" : "light")
+    const handleToggleClick = () => {
+      const element = document.documentElement
+      const isDark = element.getAttribute("data-theme") === "dark"
+
+      if (isDark) {
+        element.removeAttribute("data-theme")
+      } else {
+        element.setAttribute("data-theme", "dark")
+      }
+
+      localStorage.setItem("theme", isDark ? "light" : "dark")
+    }
+
+    const bindToggles = () => {
+      document.querySelectorAll(".js-theme-toggle").forEach((el) => {
+        el.addEventListener("click", handleToggleClick)
+      })
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bindToggles)
+    } else {
+      bindToggles()
+    }
   }
-
-  document
-    .getElementById("themeToggle")
-    ?.addEventListener("click", handleToggleClick)
 </script>
