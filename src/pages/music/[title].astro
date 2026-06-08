@@ -115,7 +115,7 @@ const { music } = Astro.props
               src={music.bandcampEmbedUrl}
               title={`${music.title} - Bandcamp`}
               seamless
-              class="mx-auto h-[472px] w-full max-w-120 border-0"
+              class="mx-auto aspect-9/16 h-auto w-full max-w-120 border-0"
             />
           )}
           {music.soundcloudEmbedUrl && (
