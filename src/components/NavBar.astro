@@ -3,7 +3,7 @@ import { Image } from "astro:assets"
 
 import ThemeIcon from "./ThemeIcon.astro"
 
-import kumo from "@/assets/kumo.png"
+import icon from "@/assets/icon.jpg"
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -45,14 +45,14 @@ const isActive = (href: string) =>
     <div class="lg:hidden"></div>
 
     <!-- 中央: アイコン -->
-    <a id="nav-icon-link" href="/" class="justify-self-center rounded-full">
+    <a href="/" class="justify-self-center">
       <Image
         id="nav-icon"
-        src={kumo}
+        src={icon}
         alt="Hydrometeor"
         width={40}
         height={40}
-        class="object-contain dark:invert"
+        class="rounded-full object-contain dark:invert"
       />
     </a>
 
@@ -111,76 +111,3 @@ const isActive = (href: string) =>
     </div>
   </nav>
 </header>
-
-<script>
-  // ナビアイコン: hover 中はゆっくり回転、離すと元の向きへ戻す
-  const SPIN_DURATION_MS = 3000
-  const RETURN_DURATION_MS = 600
-
-  const getCurrentAngle = (el: HTMLElement) => {
-    const transform = getComputedStyle(el).transform
-    if (transform === "none") return 0
-    const match = transform.match(/matrix\(([^)]+)\)/)
-    if (!match) return 0
-    const [a, b] = match[1].split(",").map(Number)
-    return Math.atan2(b, a) * (180 / Math.PI)
-  }
-
-  const setupMenuToggle = () => {
-    const toggle = document.getElementById("menu-toggle")
-    const menu = document.getElementById("mobile-menu")
-    const iconOpen = document.getElementById("icon-open")
-    const iconClose = document.getElementById("icon-close")
-
-    toggle?.addEventListener("click", () => {
-      const willOpen = toggle.getAttribute("aria-expanded") !== "true"
-      menu?.classList.toggle("grid-rows-[1fr]", willOpen)
-      menu?.classList.toggle("grid-rows-[0fr]", !willOpen)
-      toggle.setAttribute("aria-expanded", String(willOpen))
-      iconOpen?.classList.toggle("hidden", willOpen)
-      iconClose?.classList.toggle("hidden", !willOpen)
-      iconClose?.classList.toggle("flex", willOpen)
-    })
-  }
-
-  const setupNavIcon = () => {
-    const navIcon = document.getElementById("nav-icon")
-    const navIconLink = document.getElementById("nav-icon-link")
-    if (!(navIcon instanceof HTMLElement) || !navIconLink) return
-
-    let animation: Animation | null = null
-
-    navIconLink.addEventListener("mouseenter", () => {
-      const start = getCurrentAngle(navIcon)
-      animation?.cancel()
-      animation = navIcon.animate(
-        [
-          { transform: `rotate(${start}deg)` },
-          { transform: `rotate(${start + 360}deg)` },
-        ],
-        { duration: SPIN_DURATION_MS, iterations: Infinity },
-      )
-    })
-
-    navIconLink.addEventListener("mouseleave", () => {
-      const current = getCurrentAngle(navIcon)
-      // 0〜360 に正規化し、常に時計回り（角度を増やす方向）で 360deg へ戻す
-      const normalized = ((current % 360) + 360) % 360
-      const target = normalized === 0 ? 0 : 360
-      animation?.cancel()
-      animation = navIcon.animate(
-        [
-          { transform: `rotate(${normalized}deg)` },
-          { transform: `rotate(${target}deg)` },
-        ],
-        { duration: RETURN_DURATION_MS, easing: "ease-out", fill: "forwards" },
-      )
-    })
-  }
-
-  // View Transitions 後も再バインドされるよう astro:page-load で初期化する
-  document.addEventListener("astro:page-load", () => {
-    setupMenuToggle()
-    setupNavIcon()
-  })
-</script>
