@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions"
 
 import NavBar from "@/components/NavBar.astro"
+import GoogleAnalytics from "@/components/GoogleAnalytics.astro"
 
 import "@/styles/global.css"
 
@@ -30,6 +31,7 @@ const pageTitle = title ? `${title} | Hydrometeor` : "Hydrometeor"
       rel="stylesheet"
     />
     <ClientRouter />
+    <GoogleAnalytics id="G-7QHM8HZTWY" />
     <script is:inline>
       document.documentElement.setAttribute(
         "data-theme",
