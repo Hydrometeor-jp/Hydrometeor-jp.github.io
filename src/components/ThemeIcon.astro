@@ -13,30 +13,16 @@ const { class: className } = Astro.props
 </button>
 
 <script is:inline>
-  // 複数インスタンスを配置しても初期化・バインドは一度だけ行う
-  if (!window.__themeToggleInit) {
-    window.__themeToggleInit = true
+  // イベント委譲で document に一度だけバインドする。
+  // document は View Transitions を跨いで保持されるため、
+  // 遷移で入れ替わったボタンにも対応できる。
+  if (!window.__themeToggleBound) {
+    window.__themeToggleBound = true
 
-    const theme = (() => {
-      const localStorageTheme = localStorage?.getItem("theme") ?? ""
-      if (["dark", "light"].includes(localStorageTheme)) {
-        return localStorageTheme
-      }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark"
-      }
-      return "light"
-    })()
+    document.addEventListener("click", (event) => {
+      const toggle = event.target?.closest?.(".js-theme-toggle")
+      if (!toggle) return
 
-    if (theme === "light") {
-      document.documentElement.removeAttribute("data-theme")
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark")
-    }
-
-    window.localStorage.setItem("theme", theme)
-
-    const handleToggleClick = () => {
       const element = document.documentElement
       const isDark = element.getAttribute("data-theme") === "dark"
 
@@ -47,18 +33,6 @@ const { class: className } = Astro.props
       }
 
       localStorage.setItem("theme", isDark ? "light" : "dark")
-    }
-
-    const bindToggles = () => {
-      document.querySelectorAll(".js-theme-toggle").forEach((el) => {
-        el.addEventListener("click", handleToggleClick)
-      })
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", bindToggles)
-    } else {
-      bindToggles()
-    }
+    })
   }
 </script>

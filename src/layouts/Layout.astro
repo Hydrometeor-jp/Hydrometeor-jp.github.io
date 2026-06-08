@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions"
+
 import NavBar from "@/components/NavBar.astro"
 
 import "@/styles/global.css"
@@ -27,6 +29,7 @@ const pageTitle = title ? `${title} | Hydrometeor` : "Hydrometeor"
       href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Zen+Old+Mincho&display=swap"
       rel="stylesheet"
     />
+    <ClientRouter />
     <script is:inline>
       document.documentElement.setAttribute(
         "data-theme",

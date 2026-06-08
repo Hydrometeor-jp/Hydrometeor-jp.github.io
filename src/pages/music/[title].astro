@@ -17,6 +17,13 @@ const { music } = Astro.props
 
 <Layout title={music.title}>
   <section class="mx-auto max-w-4xl px-8 py-16">
+    <a
+      href="/music/"
+      class="mb-8 inline-block text-sm tracking-widest transition-opacity hover:opacity-80"
+    >
+      {"<"}
+      <span class="underline underline-offset-4">Back to Music List</span>
+    </a>
     <div class="flex flex-col gap-16 md:flex-row">
       <!-- サムネイル -->
       <div class="shrink-0">
@@ -26,6 +33,7 @@ const { music } = Astro.props
           width={300}
           height={300}
           class="w-full object-cover md:w-72"
+          transition:name={`music-thumbnail-${toMusicSlug(music.title)}`}
         />
 
         <div class="mt-8">

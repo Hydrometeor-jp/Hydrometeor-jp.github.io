@@ -20,6 +20,7 @@ const { contents: music } = await getMusicList()
                 width={400}
                 height={400}
                 class="w-full object-cover"
+                transition:name={`music-thumbnail-${toMusicSlug(music.title)}`}
               />
               <div class="absolute inset-0 bg-white opacity-0 transition-opacity group-hover:opacity-20" />
             </div>
