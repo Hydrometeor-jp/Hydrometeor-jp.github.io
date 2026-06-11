@@ -28,7 +28,7 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "0.5.19",
+    "@tailwindcss/typography": "0.5.20",
     "@typescript-eslint/parser": "8.60.1",
     "eslint": "9.39.4",
     "eslint-config-prettier": "10.1.8",
