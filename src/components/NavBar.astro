@@ -52,7 +52,7 @@ const isActive = (href: string) =>
         alt="Hydrometeor"
         width={40}
         height={40}
-        class="rounded-full object-contain dark:invert"
+        class="rounded-full object-contain"
       />
     </a>
 
@@ -111,3 +111,25 @@ const isActive = (href: string) =>
     </div>
   </nav>
 </header>
+
+<script>
+  const setupMenuToggle = () => {
+    const toggle = document.getElementById("menu-toggle")
+    const menu = document.getElementById("mobile-menu")
+    const iconOpen = document.getElementById("icon-open")
+    const iconClose = document.getElementById("icon-close")
+
+    toggle?.addEventListener("click", () => {
+      const willOpen = toggle.getAttribute("aria-expanded") !== "true"
+      menu?.classList.toggle("grid-rows-[1fr]", willOpen)
+      menu?.classList.toggle("grid-rows-[0fr]", !willOpen)
+      toggle.setAttribute("aria-expanded", String(willOpen))
+      iconOpen?.classList.toggle("hidden", willOpen)
+      iconClose?.classList.toggle("hidden", !willOpen)
+      iconClose?.classList.toggle("flex", willOpen)
+    })
+  }
+
+  // View Transitions 後も再バインドされるよう astro:page-load で初期化する
+  document.addEventListener("astro:page-load", setupMenuToggle)
+</script>
