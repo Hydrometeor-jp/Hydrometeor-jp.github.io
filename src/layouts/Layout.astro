@@ -33,14 +33,22 @@ const pageTitle = title ? `${title} | Hydrometeor` : "Hydrometeor"
     <ClientRouter />
     <GoogleAnalytics id="G-7QHM8HZTWY" />
     <script is:inline>
-      document.documentElement.setAttribute(
-        "data-theme",
-        localStorage.theme === "dark" ||
-          (!("theme" in localStorage) &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches)
-          ? "dark"
-          : "light",
-      )
+      // View Transitions で遷移すると <html> の属性が遷移先の静的HTMLに
+      // 差し替えられ data-theme が失われるため、初回ロード時に加えて
+      // astro:after-swap（描画前に発火）でもテーマを再適用する。
+      function applyTheme() {
+        document.documentElement.setAttribute(
+          "data-theme",
+          localStorage.theme === "dark" ||
+            (!("theme" in localStorage) &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ? "dark"
+            : "light",
+        )
+      }
+
+      applyTheme()
+      document.addEventListener("astro:after-swap", applyTheme)
     </script>
   </head>
   <body class="overflow-x-hidden">
