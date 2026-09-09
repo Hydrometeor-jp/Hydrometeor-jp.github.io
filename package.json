@@ -49,6 +49,6 @@
   "overrides": {
     "react": "npm:@preact/compat@latest",
     "react-dom": "npm:@preact/compat@latest",
-    "vite": "^7"
+    "vite": "^8.0.0"
   }
 }
